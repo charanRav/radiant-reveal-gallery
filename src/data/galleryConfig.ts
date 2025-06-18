@@ -5,121 +5,116 @@ export interface GalleryImage {
   title: string;
   category: string;
   description?: string;
-  tags?: string[];
 }
 
-export const galleryCategories = [
+export interface GalleryCategory {
+  id: string;
+  label: string;
+}
+
+export const galleryCategories: GalleryCategory[] = [
   { id: 'all', label: 'All' },
   { id: 'nature', label: 'Nature' },
-  { id: 'technology', label: 'Technology' },
   { id: 'architecture', label: 'Architecture' },
-  { id: 'people', label: 'People' },
-  { id: 'abstract', label: 'Abstract' }
+  { id: 'portrait', label: 'Portrait' },
+  { id: 'travel', label: 'Travel' },
+  { id: 'art', label: 'Art' },
 ];
 
-// Sample gallery images using Unsplash URLs as S3 equivalents
+// Sample images - replace with your Amazon S3 URLs
 export const galleryImages: GalleryImage[] = [
   {
     id: '1',
-    url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80',
-    title: 'Misty Mountain Peak',
+    url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=800&fit=crop',
+    title: 'Mountain Landscape',
     category: 'nature',
-    description: 'A breathtaking view of fog-covered mountain summit at dawn',
-    tags: ['landscape', 'mountain', 'fog', 'peaceful']
+    description: 'Beautiful mountain scenery during golden hour'
   },
   {
     id: '2',
-    url: 'https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=800&q=80',
-    title: 'Ocean Wave',
-    category: 'nature',
-    description: 'Powerful ocean wave captured at the perfect moment',
-    tags: ['ocean', 'wave', 'blue', 'dynamic']
+    url: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&h=800&fit=crop',
+    title: 'Modern Architecture',
+    category: 'architecture',
+    description: 'Contemporary building design with glass facade'
   },
   {
     id: '3',
-    url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
-    title: 'Circuit Board Macro',
-    category: 'technology',
-    description: 'Detailed macro photography of electronic circuit board',
-    tags: ['electronics', 'macro', 'technology', 'green']
+    url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=800&fit=crop',
+    title: 'Portrait Photography',
+    category: 'portrait',
+    description: 'Professional portrait with natural lighting'
   },
   {
     id: '4',
-    url: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80',
-    title: 'Code on Monitor',
-    category: 'technology',
-    description: 'Java programming code displayed on a monitor screen',
-    tags: ['programming', 'code', 'monitor', 'development']
+    url: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=800&fit=crop',
+    title: 'City Streets',
+    category: 'travel',
+    description: 'Urban exploration and street photography'
   },
   {
     id: '5',
-    url: 'https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=800&q=80',
-    title: 'Modern Building',
-    category: 'architecture',
-    description: 'Low angle view of contemporary gray building architecture',
-    tags: ['building', 'architecture', 'modern', 'geometric']
+    url: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&h=800&fit=crop',
+    title: 'Abstract Art',
+    category: 'art',
+    description: 'Digital art composition with vibrant colors'
   },
   {
     id: '6',
-    url: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&q=80',
-    title: 'White Concrete Structure',
-    category: 'architecture',
-    description: 'Minimalist white concrete building with clean lines',
-    tags: ['concrete', 'minimalist', 'white', 'clean']
+    url: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&h=800&fit=crop',
+    title: 'Ocean Waves',
+    category: 'nature',
+    description: 'Dramatic seascape with powerful waves'
   },
   {
     id: '7',
-    url: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=800&q=80',
-    title: 'Remote Work',
-    category: 'people',
-    description: 'Woman working on laptop in comfortable home setting',
-    tags: ['work', 'laptop', 'home', 'productivity']
+    url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=800&fit=crop',
+    title: 'Urban Architecture',
+    category: 'architecture',
+    description: 'Geometric patterns in modern buildings'
   },
   {
     id: '8',
-    url: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80',
-    title: 'Focused Developer',
-    category: 'people',
-    description: 'Woman in white shirt concentrating on coding work',
-    tags: ['developer', 'coding', 'focus', 'workspace']
+    url: 'https://images.unsplash.com/photo-1464207687429-7505649dae38?w=800&h=800&fit=crop',
+    title: 'Adventure Travel',
+    category: 'travel',
+    description: 'Mountain hiking and outdoor adventure'
   },
-  {
-    id: '9',
-    url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80',
-    title: 'Matrix Code',
-    category: 'abstract',
-    description: 'Digital matrix-style code visualization',
-    tags: ['matrix', 'digital', 'code', 'green']
-  },
-  {
-    id: '10',
-    url: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80',
-    title: 'Mountain Vista',
-    category: 'nature',
-    description: 'Bird\'s eye view of lush green mountain landscape',
-    tags: ['mountains', 'aerial', 'green', 'vista']
-  },
-  {
-    id: '11',
-    url: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800&q=80',
-    title: 'Colorful Code',
-    category: 'technology',
-    description: 'Vibrant web development code on computer monitor',
-    tags: ['web', 'development', 'colorful', 'programming']
-  },
-  {
-    id: '12',
-    url: 'https://images.unsplash.com/photo-1615729947596-a598e5de0ab3?w=800&q=80',
-    title: 'Rocky Mountain Landscape',
-    category: 'nature',
-    description: 'Dramatic rocky mountain terrain during golden hour',
-    tags: ['rocks', 'mountain', 'landscape', 'dramatic']
-  }
 ];
 
-// Easy configuration for updating S3 URLs
-export const s3Config = {
-  bucketUrl: 'https://your-s3-bucket.s3.amazonaws.com',
-  // When you have real S3 URLs, update the galleryImages array above
-  // or create a function to fetch from your S3 bucket
+// Function to generate more images (simulating API call)
+export const generateMoreImages = (currentCount: number, category: string = 'all'): GalleryImage[] => {
+  const imageTemplates = [
+    { title: 'Forest Path', category: 'nature', base: 'photo-1441974231531-c6227db76b6e' },
+    { title: 'Sunset Beach', category: 'nature', base: 'photo-1507525428034-b723cf961d3e' },
+    { title: 'Glass Building', category: 'architecture', base: 'photo-1449824913935-59a10b8d2000' },
+    { title: 'Bridge Design', category: 'architecture', base: 'photo-1449824913935-59a10b8d2000' },
+    { title: 'Street Portrait', category: 'portrait', base: 'photo-1507003211169-0a1dd7228f2d' },
+    { title: 'Business Portrait', category: 'portrait', base: 'photo-1472099645785-5658abf4ff4e' },
+    { title: 'City Night', category: 'travel', base: 'photo-1477959858617-67f85cf4f1df' },
+    { title: 'Local Market', category: 'travel', base: 'photo-1488646953014-85cb44e25828' },
+    { title: 'Digital Creation', category: 'art', base: 'photo-1541961017774-22349e4a1262' },
+    { title: 'Paint Splash', category: 'art', base: 'photo-1562887284-0c12b09aa580' },
+  ];
+
+  const newImages: GalleryImage[] = [];
+  
+  for (let i = 0; i < 6; i++) {
+    const template = imageTemplates[i % imageTemplates.length];
+    const imageId = `generated_${currentCount + i + 1}`;
+    
+    // Skip if filtering by category and doesn't match
+    if (category !== 'all' && template.category !== category) {
+      continue;
+    }
+    
+    newImages.push({
+      id: imageId,
+      url: `https://images.unsplash.com/${template.base}?w=800&h=800&fit=crop&q=80&auto=format&ixlib=rb-4.0.3&random=${Date.now()}_${i}`,
+      title: `${template.title} ${currentCount + i + 1}`,
+      category: template.category,
+      description: `Generated image for ${template.category} category`
+    });
+  }
+  
+  return newImages;
 };

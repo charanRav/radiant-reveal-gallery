@@ -1,32 +1,47 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { galleryImages, galleryCategories, GalleryImage } from '@/data/galleryConfig';
+import { galleryImages, galleryCategories, generateMoreImages, GalleryImage } from '@/data/galleryConfig';
+import { Loader2 } from 'lucide-react';
 import ImageLightbox from './ImageLightbox';
 
 const Gallery: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [allImages, setAllImages] = useState<GalleryImage[]>(galleryImages);
   const [filteredImages, setFilteredImages] = useState<GalleryImage[]>(galleryImages);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   useEffect(() => {
     if (selectedCategory === 'all') {
-      setFilteredImages(galleryImages);
+      setFilteredImages(allImages);
     } else {
-      setFilteredImages(galleryImages.filter(img => img.category === selectedCategory));
+      setFilteredImages(allImages.filter(img => img.category === selectedCategory));
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, allImages]);
 
   const openLightbox = (index: number) => {
-    const actualIndex = galleryImages.findIndex(img => img.id === filteredImages[index].id);
+    const actualIndex = allImages.findIndex(img => img.id === filteredImages[index].id);
     setSelectedImageIndex(actualIndex);
     setLightboxOpen(true);
   };
 
   const handleImageLoad = (imageId: string) => {
     setLoadedImages(prev => new Set(prev).add(imageId));
+  };
+
+  const loadMoreImages = async () => {
+    setIsLoadingMore(true);
+    
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    const newImages = generateMoreImages(allImages.length, selectedCategory);
+    setAllImages(prev => [...prev, ...newImages]);
+    
+    setIsLoadingMore(false);
   };
 
   return (
@@ -62,7 +77,7 @@ const Gallery: React.FC = () => {
           </div>
 
           {/* Gallery Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
             {filteredImages.map((image, index) => (
               <div
                 key={image.id}
@@ -97,7 +112,25 @@ const Gallery: React.FC = () => {
             ))}
           </div>
 
-          {filteredImages.length === 0 && (
+          {/* Load More Button */}
+          <div className="text-center">
+            <Button
+              onClick={loadMoreImages}
+              disabled={isLoadingMore}
+              className="px-8 py-3 text-lg font-medium bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-none"
+            >
+              {isLoadingMore ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  Loading...
+                </>
+              ) : (
+                'Load More Images'
+              )}
+            </Button>
+          </div>
+
+          {filteredImages.length === 0 && !isLoadingMore && (
             <div className="text-center py-16">
               <p className="text-xl text-muted-foreground">No images found in this category.</p>
             </div>
@@ -107,7 +140,7 @@ const Gallery: React.FC = () => {
 
       {/* Lightbox Modal */}
       <ImageLightbox
-        images={galleryImages}
+        images={allImages}
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
         currentIndex={selectedImageIndex}
