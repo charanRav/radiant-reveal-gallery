@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
-import About from '@/components/About';
 import Projects from '@/components/Projects';
 import Gallery from '@/components/Gallery';
 import Contact from '@/components/Contact';
@@ -42,7 +41,6 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navigation darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       <Hero />
-      <About />
       <Projects />
       <Gallery />
       <Contact />

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Sun, Moon } from 'lucide-react';
@@ -14,7 +13,6 @@ const Navigation: React.FC<NavigationProps> = ({ darkMode, toggleDarkMode }) => 
 
   const navItems = [
     { label: 'Home', href: '#hero' },
-    { label: 'About', href: '#about' },
     { label: 'Projects', href: '#projects' },
     { label: 'Gallery', href: '#gallery' },
     { label: 'Contact', href: '#contact' },
