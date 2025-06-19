@@ -12,6 +12,7 @@ const Gallery: React.FC = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   useEffect(() => {
@@ -30,18 +31,32 @@ const Gallery: React.FC = () => {
 
   const handleImageLoad = (imageId: string) => {
     setLoadedImages(prev => new Set(prev).add(imageId));
+    setFailedImages(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(imageId);
+      return newSet;
+    });
+  };
+
+  const handleImageError = (imageId: string) => {
+    setFailedImages(prev => new Set(prev).add(imageId));
+    console.log(`Failed to load image: ${imageId}`);
   };
 
   const loadMoreImages = async () => {
     setIsLoadingMore(true);
     
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const newImages = generateMoreImages(allImages.length, selectedCategory);
-    setAllImages(prev => [...prev, ...newImages]);
-    
-    setIsLoadingMore(false);
+    try {
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      const newImages = generateMoreImages(allImages.length, selectedCategory);
+      setAllImages(prev => [...prev, ...newImages]);
+    } catch (error) {
+      console.error('Error loading more images:', error);
+    } finally {
+      setIsLoadingMore(false);
+    }
   };
 
   return (
@@ -86,27 +101,42 @@ const Gallery: React.FC = () => {
               >
                 <div className="relative aspect-square rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
                   {/* Loading placeholder */}
-                  {!loadedImages.has(image.id) && (
-                    <div className="absolute inset-0 bg-muted animate-pulse rounded-2xl"></div>
+                  {!loadedImages.has(image.id) && !failedImages.has(image.id) && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse rounded-2xl flex items-center justify-center">
+                      <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
+                    </div>
+                  )}
+                  
+                  {/* Error placeholder */}
+                  {failedImages.has(image.id) && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center">
+                      <div className="text-center text-gray-500">
+                        <div className="w-8 h-8 mx-auto mb-2 bg-gray-300 rounded"></div>
+                        <p className="text-xs">Image unavailable</p>
+                      </div>
+                    </div>
                   )}
                   
                   <img
                     src={image.url}
                     alt={image.title}
                     className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-700 ${
-                      !loadedImages.has(image.id) ? 'opacity-0' : 'opacity-100'
+                      !loadedImages.has(image.id) || failedImages.has(image.id) ? 'opacity-0' : 'opacity-100'
                     }`}
                     onLoad={() => handleImageLoad(image.id)}
+                    onError={() => handleImageError(image.id)}
                     loading="lazy"
                   />
                   
                   {/* Overlay */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end">
-                    <div className="p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                      <h3 className="font-semibold text-lg mb-1">{image.title}</h3>
-                      <p className="text-sm opacity-90">{image.category}</p>
+                  {loadedImages.has(image.id) && !failedImages.has(image.id) && (
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end">
+                      <div className="p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <h3 className="font-semibold text-lg mb-1">{image.title}</h3>
+                        <p className="text-sm opacity-90 capitalize">{image.category}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             ))}
