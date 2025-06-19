@@ -11,8 +11,8 @@ const Projects: React.FC = () => {
       description: 'A comprehensive visual documentation of endangered ecosystems across three continents, featuring over 200 high-resolution photographs.',
       image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&q=80',
       technologies: ['Photography', 'Post-Processing', 'Storytelling'],
-      liveUrl: '#',
-      githubUrl: '#'
+      portfolioUrl: '/portfolio/nature-documentary',
+      githubUrl: 'https://github.com/portfolio/nature-documentary'
     },
     {
       id: 2,
@@ -20,8 +20,8 @@ const Projects: React.FC = () => {
       description: 'Modern architectural photography showcasing the intersection of design, functionality, and urban planning in major metropolitan areas.',
       image: 'https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=600&q=80',
       technologies: ['Architecture', 'Composition', 'Urban Design'],
-      liveUrl: '#',
-      githubUrl: '#'
+      portfolioUrl: '/portfolio/urban-architecture',
+      githubUrl: 'https://github.com/portfolio/urban-architecture'
     },
     {
       id: 3,
@@ -29,10 +29,18 @@ const Projects: React.FC = () => {
       description: 'Artistic representation of technology concepts through macro photography and digital manipulation, bridging the gap between art and science.',
       image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80',
       technologies: ['Macro Photography', 'Digital Art', 'Technology'],
-      liveUrl: '#',
-      githubUrl: '#'
+      portfolioUrl: '/portfolio/tech-innovation',
+      githubUrl: 'https://github.com/portfolio/tech-innovation'
     }
   ];
+
+  const handleViewProject = (portfolioUrl: string) => {
+    window.open(portfolioUrl, '_blank');
+  };
+
+  const handleViewDetails = (githubUrl: string) => {
+    window.open(githubUrl, '_blank');
+  };
 
   return (
     <section id="projects" className="py-20 lg:py-32 bg-muted/30">
@@ -86,16 +94,16 @@ const Projects: React.FC = () => {
                     variant="outline"
                     size="sm"
                     className="flex-1 hover:bg-foreground/5"
-                    onClick={() => window.open(project.liveUrl, '_blank')}
+                    onClick={() => handleViewProject(project.portfolioUrl)}
                   >
                     <ExternalLink className="w-4 h-4 mr-2" />
-                    View
+                    View Portfolio
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     className="flex-1 hover:bg-foreground/5"
-                    onClick={() => window.open(project.githubUrl, '_blank')}
+                    onClick={() => handleViewDetails(project.githubUrl)}
                   >
                     <Github className="w-4 h-4 mr-2" />
                     Details
